@@ -33,8 +33,5 @@
     "url": "git://github.com/DanielSilva/metrics.git"
   },
   "author": "DanielSilva",
-  "license": "",
-  "devDependencies": {
-    "shelljs": "^0.7.8"
-  }
+  "license": ""
 }
