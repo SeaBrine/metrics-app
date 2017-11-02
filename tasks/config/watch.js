@@ -24,6 +24,11 @@ module.exports = function(grunt) {
 
       // When assets are changed:
       tasks: ['syncAssets' , 'linkAssets' ]
+    },
+    versao: {
+      files: ['api/**/*', 'assets/**/*', 'config/**/*', 'views/**/*'],
+
+      tasks: ['incrementar']
     }
   });
 
