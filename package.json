@@ -24,7 +24,6 @@
     "sails-disk": "~0.10.9"
   },
   "scripts": {
-    "precommit": "npm version prerelease",
     "debug": "node debug app.js",
     "start": "node app.js"
   },
@@ -34,8 +33,5 @@
     "url": "git://github.com/DanielSilva/metrics.git"
   },
   "author": "DanielSilva",
-  "license": "",
-  "devDependencies": {
-    "husky": "^0.14.3"
-  }
+  "license": ""
 }
