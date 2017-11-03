@@ -24,9 +24,9 @@
     "sails-disk": "~0.10.9"
   },
   "scripts": {
+    "postcommit": "npm version prerelease",
     "debug": "node debug app.js",
-    "start": "node app.js",
-    "postcommit": "npm version prerelease"
+    "start": "node app.js"
   },
   "main": "app.js",
   "repository": {
