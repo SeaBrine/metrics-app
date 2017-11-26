@@ -8,4 +8,4 @@
 
 require_once '../vendor/autoload.php';
 
-$route = new \Metrics\Route;
+$route = new \Metrics\Route();

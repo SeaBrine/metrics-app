@@ -34,13 +34,19 @@ class Route
 
     public function initRoutes() : void
     {
-        $routes['login'] = array(
+        $routes[] = array(
             "route" => "/",
             "controller" => "loginController",
             "action" => "index"
         );
 
-        $routes['home'] = array(
+        $routes[] = array(
+            "route" => "/login/validar",
+            "controller" => "loginController",
+            "action" => "validar"
+        );
+
+        $routes[] = array(
             "route" => "/home",
             "controller" => "homeController",
             "action" => "index"

@@ -1,4 +1,52 @@
-<h1>Página de Login</h1>
-<?php foreach ($this->view->cars as $car) { ?>
-    <p><?= $car ?></p>
-<?php } ?>
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <style> <?= $this->view->bootstrapCss ?> </style>
+    <style> <?= $this->view->nowUiKitCss ?> </style>
+    <style>
+        .login-center {
+            margin-top: 16%;
+            margin-left: 39%;
+        }
+
+        body {
+            background-color: #762f05;
+        }
+
+    </style>
+
+</head>
+<body>
+
+    <div class="login-center">
+        <div class="card" style="width: 20rem;">
+            <div class="card-body">
+                <h4 class="card-title">Login</h4>
+
+                <form action="/login/validar" method="post">
+
+                    <div class="form-group">
+                        <label>User</label>
+                        <input type="text" name="user" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" name="password" class="form-control" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-success">Login</button>
+                    <button type="reset" class="btn btn-danger">Cancel</button>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <script><?= $this->view->jquery ?></script>
+    <script><?= $this->view->popper ?></script>
+    <script><?= $this->view->bootstrapJs ?></script>
+    <script><?= $this->view->nowUiKitJs ?></script>
+</body>
+</html>
