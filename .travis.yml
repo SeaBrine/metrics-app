@@ -1,8 +1,12 @@
-language: node_js
+language: php
+php:
+  - '7.1'
 services:
   - mysql
-node_js:
-  - "7"
-  - "8"
-install:
-  - "npm install"
+
+before_script:
+  - curl -sSf -o ~/.phpenv/versions/hhvm/bin/phpunit https://phar.phpunit.de/phpunit-6.4.phar
+  - composer install
+
+script:
+  - vendor/bin/phpunit
