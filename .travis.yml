@@ -5,8 +5,7 @@ services:
   - mysql
 
 before_script:
-  - curl -sSf -o ~/.phpenv/versions/hhvm/bin/phpunit https://phar.phpunit.de/phpunit-6.4.phar
   - composer install
 
 script:
-  - vendor/bin/phpunit
+  - phpunit
