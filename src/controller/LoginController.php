@@ -10,18 +10,32 @@ declare(strict_types=1);
 namespace Metrics\Controller;
 
 
+use Metrics\Model\LoginModel;
+
 class LoginController extends Controller
 {
+    private $loginModel;
 
+    public function __construct()
+    {
+        $this->loginModel = new LoginModel();
+        parent::__construct();
+    }
 
     public function index() : void
     {
-        $this->view->cars = ["carro1", "carro2"];
         $this->render("index");
     }
 
     public function validar() : void
     {
-        print_r($_POST);
+        if ($this->loginModel->validLogin($_POST)) {
+            $token = $this->loginModel->gerarToken($_POST);
+            $this->loginModel->loginSession($token);
+            $home = new HomeController();
+            $home->index();
+        } else {
+            $this->render("index");
+        }
     }
 }
