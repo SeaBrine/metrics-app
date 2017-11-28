@@ -79,14 +79,15 @@ class LoginModel extends Model
 
     public function loginSession(string $token) : void
     {
-        session_start();
         $_SESSION['token'] = $token;
     }
 
     public function verificarValidadeToken() : bool
     {
         if (isset($_SESSION['token'])) {
-            return $this->validarToken($_SESSION['token']);
+            $result = $this->validarToken($_SESSION['token']);
+            session_write_close();
+            return $result;
         } else {
             return false;
         }

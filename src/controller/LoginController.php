@@ -27,6 +27,12 @@ class LoginController extends Controller
         $this->render("index");
     }
 
+    public function logout() : void
+    {
+        unset($_SESSION['token']);
+        $this->render("index");
+    }
+
     public function validar() : void
     {
         if ($this->loginModel->validLogin($_POST)) {

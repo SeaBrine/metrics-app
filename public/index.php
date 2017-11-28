@@ -8,4 +8,8 @@
 
 require_once '../vendor/autoload.php';
 
+if (!isset($_SESSION)) {
+    session_start();
+}
+
 $route = new \Metrics\Route();

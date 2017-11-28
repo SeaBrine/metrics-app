@@ -47,6 +47,12 @@ class Route
         );
 
         $routes[] = array(
+            "route" => "/logout",
+            "controller" => "loginController",
+            "action" => "logout"
+        );
+
+        $routes[] = array(
             "route" => "/home",
             "controller" => "homeController",
             "action" => "index"

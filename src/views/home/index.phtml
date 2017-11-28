@@ -1,3 +1,55 @@
-<h1>Página Home</h1>
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <style> <?= $this->view->bootstrapCss ?> </style>
+    <style> <?= $this->view->nowUiKitCss ?> </style>
 
-<p><?= $this->view->teste ?></p>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg bg-danger">
+    <div class="container">
+        <div class="navbar-translate">
+            <a class="navbar-brand" href="/home">
+                Metrics
+            </a>
+        </div>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navigation">
+            <div class="dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbarDropdownMenuLink1">
+                    Métricas
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink1">
+                    <a class="dropdown-item" href="#">Cadastrar</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Métricas Cadastradas</a>
+                </ul>
+            </div>
+            <div class="dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbarDropdownMenuLink1">
+                    Tempo
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink1">
+                    <a class="dropdown-item" href="#">Cadastrar Tempo</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Tempo Cadastrados</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Pomodoro</a>
+                </ul>
+            </div>
+            <a href="/logout" class="nav-link">
+                logout
+            </a>
+        </div>
+    </div>
+</nav>
+
+
+<script><?= $this->view->jquery ?></script>
+<script><?= $this->view->popper ?></script>
+<script><?= $this->view->bootstrapJs ?></script>
+<script><?= $this->view->nowUiKitJs ?></script>
+</body>
+</html>
+
