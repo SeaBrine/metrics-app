@@ -58,6 +58,12 @@ class Route
             "action" => "index"
         );
 
+        $routes[] = array(
+            "route" => "/home/graphic",
+            "controller" => "homeController",
+            "action" => "graphic"
+        );
+
         $this->setRoute($routes);
     }
 

@@ -45,11 +45,48 @@
     </div>
 </nav>
 
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card text-white bg-info mb-3" style="max-width: 20rem;">
+                <div class="card-header">Questões <?= date('Y')?></div>
+                <div class="card-body">
+                    <p>30 Questões</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
+                <div class="card-header">Tempo <?= date('Y')?></div>
+                <div class="card-body">
+                    <p>300 minutos</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-success mb-3" style="max-width: 20rem;">
+                <div class="card-header">Aproveitamento <?= date("Y") ?></div>
+                <div class="card-body">
+                    <p>100%</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script><?= $this->view->jquery ?></script>
 <script><?= $this->view->popper ?></script>
 <script><?= $this->view->bootstrapJs ?></script>
 <script><?= $this->view->nowUiKitJs ?></script>
+<script>
+    $(document).ready(function () {
+       $.post('/home/graphic', function (data, status) {
+           var json = JSON.parse(data);
+           alert("Data: " + json.teste + "\nStatus: " + status);
+       }) 
+    });
+</script>
 </body>
 </html>
 

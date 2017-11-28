@@ -27,10 +27,19 @@ class HomeController extends Controller
     public function index() : void
     {
         if ($this->loginModel->verificarValidadeToken()) {
-            $this->view->teste = "Daniel Silva";
             $this->render("index");
         } else {
             $this->login->index();
         }
+    }
+
+    public function graphic() : void
+    {
+        if ($this->loginModel->verificarValidadeToken()) {
+            echo json_encode(["teste" => "Daniel", "age" => 28]);
+        } else {
+            $this->login->index();
+        }
+
     }
 }
