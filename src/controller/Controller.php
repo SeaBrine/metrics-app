@@ -20,6 +20,7 @@ class Controller
     protected const JQUERY_JS = "/now-ui-kit/assets/js/core/jquery.3.2.1.min.js";
     protected const POPPER_JS = "/now-ui-kit/assets/js/core/popper.min.js";
     protected const NOW_UI_KIT_JS = "/now-ui-kit/assets/js/now-ui-kit.js";
+    protected const GRAF_JS = "/js/graf.js";
 
     public $view;
 
@@ -33,6 +34,7 @@ class Controller
         $this->view->jquery = $this->css($this::JQUERY_JS);
         $this->view->popper = $this->css($this::POPPER_JS);
         $this->view->nowUiKitJs = $this->css($this::NOW_UI_KIT_JS);
+        $this->view->grafJs = $this->css($this::GRAF_JS);
 
     }
 

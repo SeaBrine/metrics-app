@@ -74,17 +74,35 @@
     </div>
 </div>
 
+<canvas id="lineProva" width="200" height="60"></canvas>
+<canvas id="barProva" width="200" height="60"></canvas>
+<canvas id="lineTempo" width="200" height="60"></canvas>
+<canvas id="barTempo" width="200" height="60"></canvas>
+
 
 <script><?= $this->view->jquery ?></script>
 <script><?= $this->view->popper ?></script>
 <script><?= $this->view->bootstrapJs ?></script>
 <script><?= $this->view->nowUiKitJs ?></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+<script><?= $this->view->grafJs ?></script>
 <script>
     $(document).ready(function () {
        $.post('/home/graphic', function (data, status) {
            var json = JSON.parse(data);
-           alert("Data: " + json.teste + "\nStatus: " + status);
-       }) 
+
+           var data = [10,20,30];
+           var lineProva = document.getElementById("lineProva");
+           var barProva = document.getElementById("barProva");
+           var lineTempo = document.getElementById("lineTempo");
+           var barTempo = document.getElementById("barTempo");
+
+           graphicLine(lineProva, [10,20,30]);
+           graphicBar(barProva, [10,20,30]);
+           graphicLine(lineTempo, [10,20,30]);
+           graphicBar(barTempo, [10,20,30]);
+
+       });
     });
 </script>
 </body>
