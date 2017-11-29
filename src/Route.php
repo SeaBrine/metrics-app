@@ -64,6 +64,18 @@ class Route
             "action" => "graphic"
         );
 
+        $routes[] = array(
+            "route" => "/cadastrar",
+            "controller" => "exerciseController",
+            "action" => "index"
+        );
+
+        $routes[] = array(
+            "route" => "/cadastrar/salvar",
+            "controller" => "exerciseController",
+            "action" => "salvar"
+        );
+
         $this->setRoute($routes);
     }
 

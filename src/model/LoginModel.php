@@ -34,7 +34,7 @@ class LoginModel extends Model
     public function gerarToken(array $paramsUser) : string
     {
         $pdo = $this->getConection()->prepare(
-            "SELECT cpf, name, auth_id FROM metrics.users_metrics WHERE user = :user AND password = :password"
+            "SELECT id, cpf, name, auth_id FROM metrics.users_metrics WHERE user = :user AND password = :password"
         );
 
         $pdo->execute(array(
@@ -55,6 +55,8 @@ class LoginModel extends Model
                "token" => $token,
                 "id" => $result[0]['auth_id']
             ));
+
+            $_SESSION['id_user'] = $result[0]['id'];
 
             return $token;
         } else {

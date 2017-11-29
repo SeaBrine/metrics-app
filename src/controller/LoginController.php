@@ -30,6 +30,7 @@ class LoginController extends Controller
     public function logout() : void
     {
         unset($_SESSION['token']);
+        unset($_SESSION['id_user']);
         $this->render("index");
     }
 
