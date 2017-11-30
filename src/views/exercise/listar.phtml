@@ -54,7 +54,7 @@
 
     <div class="container">
         <table class="table">
-            <thead class="thead-dark">
+            <thead>
                 <tr>
                     <th scope="col">Banca</th>
                     <th scope="col">Data da Realização</th>
@@ -65,7 +65,7 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($this->view->metricas as $m) {?>
+                <?php foreach ($this->view->metricas as $k => $m) {?>
                     <tr>
                         <td><?= $m['banca'] ?></td>
                         <td><?= $m['data_registro'] ?></td>
@@ -74,10 +74,10 @@
                         <td><?= $m['quant_acertos'] ?></td>
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic example">
-                                <button type="button" class="btn btn-warning">
+                                <button onclick="atualizar(<?= $k ?>)" type="button" class="btn btn-warning">
                                     <span class="fa fa-pencil-square-o"></span>
                                 </button>
-                                <button type="button" class="btn btn-danger">
+                                <button onclick="excluir(<?= $m['id']?>)" type="button" class="btn btn-danger">
                                     <span class="fa fa-trash-o"></span>
                                 </button>
                             </div>
@@ -89,10 +89,19 @@
     </div>
 
 
-<script><?= $this->view->jquery ?></script>
-<script><?= $this->view->popper ?></script>
-<script><?= $this->view->bootstrapJs ?></script>
-<script><?= $this->view->nowUiKitJs ?></script>
+    <script><?= $this->view->jquery ?></script>
+    <script><?= $this->view->popper ?></script>
+    <script><?= $this->view->bootstrapJs ?></script>
+    <script><?= $this->view->nowUiKitJs ?></script>
+    <script>
+        var atualizar = function (index) {
+            console.log(index);
+        };
+
+        var excluir = function (id) {
+            console.log(id);
+        };
+    </script>
 
 </body>
 </html>

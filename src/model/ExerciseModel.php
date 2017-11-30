@@ -47,4 +47,16 @@ class ExerciseModel extends Model
           return -200;
         }
     }
+
+    public function listar(int $id) : array
+    {
+        $data = $this->getConection()
+            ->prepare("SELECT * FROM metrics.exercicios WHERE user_id = :id");
+
+        $data->execute(array(
+            "id" => $id
+        ));
+
+        return $data->fetchAll(\PDO::FETCH_ASSOC);
+    }
 }

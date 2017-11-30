@@ -55,7 +55,7 @@ class ExerciseController extends Controller
     public function listar() : void
     {
         if ($this->loginModel->verificarValidadeToken()) {
-            $this->view->metricas = [];
+            $this->view->metricas = $this->exerciseModel->listar((int) $_SESSION['id_user']);
             $this->render('listar');
         } else {
             $this->login->index();
