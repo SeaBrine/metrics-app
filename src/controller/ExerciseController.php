@@ -93,6 +93,17 @@ class ExerciseController extends Controller
         }
     }
 
+    public function excluir() : void
+    {
+        if ($this->loginModel->verificarValidadeToken()) {
+            echo json_encode(array(
+               "result" => $this->exerciseModel->excluir((int) $_POST['id'])
+            ));
+        } else {
+            $this->login->index();
+        }
+    }
+
     private function banca() : array
     {
         return $this->exerciseModel->banca();

@@ -100,6 +100,22 @@ class ExerciseModel extends Model
         }
     }
 
+    public function excluir(int $id) : int
+    {
+        try {
+            $data = $this->getConection()
+                ->prepare("DELETE FROM `metrics`.`exercicios` WHERE id = :id");
+
+            $data->execute(array(
+                "id" => $id
+            ));
+
+            return 200;
+        } catch (\Exception $e) {
+            return -200;
+        }
+    }
+
     public function banca() : array
     {
         $data = $this->getConection()

@@ -9,6 +9,10 @@
         .ocultar-alerta {
             display: none;
         }
+
+        .cor-font-branca {
+            color: white;
+        }
     </style>
 
 </head>
@@ -87,7 +91,7 @@
                                 <button onclick="atualizar(<?= $m['id'] ?>)" type="button" class="btn btn-warning">
                                     <span class="fa fa-pencil-square-o"></span>
                                 </button>
-                                <button onclick="excluir(<?= $m['id']?>)" type="button" class="btn btn-danger">
+                                <button onclick="modalExcluir(<?= $m['id']?>)" type="button" class="btn btn-danger">
                                     <span class="fa fa-trash-o"></span>
                                 </button>
                             </div>
@@ -98,6 +102,41 @@
             </table>
         <?php } ?>
 
+    </div>
+
+    <!-- Modal Core -->
+    <div class="modal fade" id="modal-aviso" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content bg-danger">
+                <div class="modal-header">
+                    <h3 class="modal-title cor-font-branca" id="myModalLabel">Atenção</h3>
+                </div>
+                <div class="modal-body cor-font-branca">
+                    <h4>Você tem certeza que deseja excluir essa métrica ?</h4>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="excluir()">Sim</button>
+                    <button type="button" class="btn btn-info" data-dismiss="modal">Não</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Core -->
+    <div class="modal fade" id="modal-sucesso" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content bg-success">
+                <div class="modal-header">
+                    <h3 class="modal-title cor-font-branca" id="myModalLabel">Sucesso</h3>
+                </div>
+                <div class="modal-body cor-font-branca">
+                    <h4>Métrica Excluida com Sucesso</h4>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="modalSucesso()">Ok</button>
+                </div>
+            </div>
+        </div>
     </div>
 
 
@@ -111,8 +150,23 @@
             $(location).attr('href', '/atualizar');
         };
 
-        var excluir = function (id) {
-            console.log(id);
+        var modalExcluir = function (id) {
+            sessionStorage.setItem("idData", id);
+            $("#modal-aviso").modal();
+        };
+
+        var excluir = function () {
+            $.post("/cadastrar/delete", {
+                id: sessionStorage.getItem("idData")
+            }, function (res, status) {
+                if (status === "success") {
+                    $("#modal-sucesso").modal();
+                }
+            });
+        };
+
+        var modalSucesso = function () {
+          location.reload();
         };
     </script>
 

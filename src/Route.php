@@ -100,6 +100,12 @@ class Route
             "action" => "atualizar"
         );
 
+        $routes[] = array(
+            "route" => "/cadastrar/delete",
+            "controller" => "exerciseController",
+            "action" => "excluir"
+        );
+
         $this->setRoute($routes);
     }
 
