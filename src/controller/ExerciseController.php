@@ -51,4 +51,14 @@ class ExerciseController extends Controller
             $this->login->index();
         }
     }
+
+    public function listar() : void
+    {
+        if ($this->loginModel->verificarValidadeToken()) {
+            $this->view->metricas = [];
+            $this->render('listar');
+        } else {
+            $this->login->index();
+        }
+    }
 }

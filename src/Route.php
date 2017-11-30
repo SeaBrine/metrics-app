@@ -76,6 +76,12 @@ class Route
             "action" => "salvar"
         );
 
+        $routes[] = array(
+            "route" => "/listar",
+            "controller" => "exerciseController",
+            "action" => "listar"
+        );
+
         $this->setRoute($routes);
     }
 
