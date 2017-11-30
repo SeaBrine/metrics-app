@@ -88,19 +88,18 @@
 <script><?= $this->view->grafJs ?></script>
 <script>
     $(document).ready(function () {
-       $.post('/home/graphic', function (data, status) {
-           var json = JSON.parse(data);
+       $.post('/home/graphic', function (res, status) {
+           var json = JSON.parse(res);
 
-           var data = [10,20,30];
            var lineProva = document.getElementById("lineProva");
            var barProva = document.getElementById("barProva");
            var lineTempo = document.getElementById("lineTempo");
            var barTempo = document.getElementById("barTempo");
 
-           graphicLine(lineProva, [10,20,30]);
-           graphicBar(barProva, [10,20,30]);
-           graphicLine(lineTempo, [10,20,30]);
-           graphicBar(barTempo, [10,20,30]);
+           graphicLine(lineProva, json.graf.valores);
+           graphicBar(barProva, json.graf.valores);
+           graphicLine(lineTempo, []);
+           graphicBar(barTempo, []);
 
        });
     });

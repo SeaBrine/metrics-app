@@ -10,17 +10,20 @@ declare(strict_types=1);
 namespace Metrics\Controller;
 
 
+use Metrics\Model\HomeModel;
 use Metrics\Model\LoginModel;
 
 class HomeController extends Controller
 {
     private $login;
     private $loginModel;
+    private $homeModel;
 
     public function __construct()
     {
         $this->login = new LoginController();
         $this->loginModel = new LoginModel();
+        $this->homeModel = new HomeModel();
         parent::__construct();
     }
 
@@ -36,10 +39,9 @@ class HomeController extends Controller
     public function graphic() : void
     {
         if ($this->loginModel->verificarValidadeToken()) {
-            echo json_encode(["teste" => "Daniel", "age" => 28]);
+            echo json_encode(["graf" => $this->homeModel->createSeries($this->homeModel->mensal())]);
         } else {
             $this->login->index();
         }
-
     }
 }
