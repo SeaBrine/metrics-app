@@ -61,4 +61,13 @@ class ExerciseController extends Controller
             $this->login->index();
         }
     }
+
+    public function autalizar() : void
+    {
+        if ($this->loginModel->verificarValidadeToken()) {
+            $this->render('cadastrar');
+        } else {
+            $this->login->index();
+        }
+    }
 }
