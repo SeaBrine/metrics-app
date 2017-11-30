@@ -53,8 +53,18 @@
     </nav>
 
     <div class="container">
-        <table class="table">
-            <thead>
+        <?php if (count($this->view->metricas, COUNT_NORMAL) == 0) { ?>
+            <div class="alert alert-warning" role="alert">
+                <div class="container">
+                    <div class="alert-icon">
+                        <i class="fa fa-bell-o"></i>
+                    </div>
+                    <strong>Não Existe!</strong> Métricas cadastradas para você
+                </div>
+            </div>
+        <?php } else { ?>
+            <table class="table">
+                <thead>
                 <tr>
                     <th scope="col">Banca</th>
                     <th scope="col">Data da Realização</th>
@@ -63,8 +73,8 @@
                     <th scope="col">Quantidade Acertos</th>
                     <th scope="col">Options</th>
                 </tr>
-            </thead>
-            <tbody>
+                </thead>
+                <tbody>
                 <?php foreach ($this->view->metricas as $k => $m) {?>
                     <tr>
                         <td><?= $m['banca'] ?></td>
@@ -84,8 +94,10 @@
                         </td>
                     </tr>
                 <?php }?>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        <?php } ?>
+
     </div>
 
 
