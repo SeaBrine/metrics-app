@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <style> <?= $this->view->bootstrapCss ?> </style>
+    <style> <?= $this->view->nowUiKitCss ?> </style>
+    <script src="https://use.fontawesome.com/c3cb34f65e.js"></script>
+
+    <style>
+        .ocultar-alerta {
+            display: none;
+        }
+    </style>
+
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg bg-danger">
+    <div class="container">
+        <div class="navbar-translate">
+            <a class="navbar-brand" href="/home">
+                Metrics
+            </a>
+        </div>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navigation">
+            <div class="dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbarDropdownMenuLink1">
+                    Métricas
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink1">
+                    <a class="dropdown-item" href="/cadastrar">Cadastrar</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="/listar">Métricas Cadastradas</a>
+                </ul>
+            </div>
+            <div class="dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbarDropdownMenuLink1">
+                    Tempo
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink1">
+                    <a class="dropdown-item" href="#">Cadastrar Tempo</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Tempo Cadastrados</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Pomodoro</a>
+                </ul>
+            </div>
+            <a href="/logout" class="nav-link">
+                logout
+            </a>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="card mb-3">
+        <div class="card-header">Cadastrar Métricas de Exercicios</div>
+        <div class="card-body">
+            <div class="alert alert-success ocultar-alerta" id="alerta-sucesso" role="alert">
+                <div class="container">
+                    <div class="alert-icon">
+                        <i class="fa fa-thumbs-o-up"></i>
+                    </div>
+                    <strong>Pronto!</strong> Atualizado com sucesso
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">
+                                <i class="fa fa-times"></i>
+                            </span>
+                    </button>
+                </div>
+            </div>
+            <div class="card mb-3">
+                <div class="card-body">
+                    <form>
+                        <div class="form-group">
+                            <label>Banca</label>
+                            <select id="banca" class="form-control">
+                                <?php foreach ($this->view->bancas as $b) { ?>
+                                    <?php if ($b['nome'] === $this->view->dataUpdate['nome']) { ?>
+                                        <option value="<?= $b['nome'] ?>" selected><?= $b['nome'] ?></option>
+                                    <?php } else { ?>
+                                        <option value="<?= $b['nome'] ?>"><?= $b['nome'] ?></option>
+                                    <?php }?>
+                                <?php } ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Quantidade de Questões</label>
+                            <input type="number" id="quant-quest" class="form-control" value="<?= $this->view->dataUpdate['quant_questões'] ?>" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Quantidade de Acertos de Questões</label>
+                            <input type="number" class="form-control" id="quan-success" <?= $this->view->dataUpdate['quant_acertos'] ?> required>
+                        </div>
+                        <div class="form-group">
+                            <button id="salvar" class="btn btn-success" type="submit">Salvar</button>
+                            <button class="btn btn-danger" type="reset">Limpar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script><?= $this->view->jquery ?></script>
+<script><?= $this->view->popper ?></script>
+<script><?= $this->view->bootstrapJs ?></script>
+<script><?= $this->view->nowUiKitJs ?></script>
+<script>
+    $(document).submit(function (e) {
+        $.post("/cadastrar/salvar", {
+            banca: $("#banca").val(),
+            totalQuestoes: $("#quant-quest").val(),
+            totalAcertos: $("#quan-success").val()
+        }, function (data, status) {
+            var result = JSON.parse(data);
+            if (result.response === 200) {
+                $("#alerta-sucesso").removeClass('ocultar-alerta');
+                $("#banca").val("");
+                $("#quant-quest").val("");
+                $("#quan-success").val("");
+            }
+        });
+
+        e.preventDefault();
+    })
+</script>
+</body>
+</html>
