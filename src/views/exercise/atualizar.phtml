@@ -54,7 +54,7 @@
 
 <div class="container">
     <div class="card mb-3">
-        <div class="card-header">Cadastrar Métricas de Exercicios</div>
+        <div class="card-header">Atualizar Métricas de Exercicios</div>
         <div class="card-body">
             <div class="alert alert-success ocultar-alerta" id="alerta-sucesso" role="alert">
                 <div class="container">
@@ -76,21 +76,17 @@
                             <label>Banca</label>
                             <select id="banca" class="form-control">
                                 <?php foreach ($this->view->bancas as $b) { ?>
-                                    <?php if ($b['nome'] === $this->view->dataUpdate['nome']) { ?>
-                                        <option value="<?= $b['nome'] ?>" selected><?= $b['nome'] ?></option>
-                                    <?php } else { ?>
-                                        <option value="<?= $b['nome'] ?>"><?= $b['nome'] ?></option>
-                                    <?php }?>
+                                    <option value="<?= $b['nome'] ?>"><?= $b['nome'] ?></option>
                                 <?php } ?>
                             </select>
                         </div>
                         <div class="form-group">
                             <label>Quantidade de Questões</label>
-                            <input type="number" id="quant-quest" class="form-control" value="<?= $this->view->dataUpdate['quant_questões'] ?>" required>
+                            <input type="number" id="quant-quest" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label>Quantidade de Acertos de Questões</label>
-                            <input type="number" class="form-control" id="quan-success" <?= $this->view->dataUpdate['quant_acertos'] ?> required>
+                            <input type="number" class="form-control" id="quan-success" required>
                         </div>
                         <div class="form-group">
                             <button id="salvar" class="btn btn-success" type="submit">Salvar</button>
@@ -103,14 +99,28 @@
     </div>
 </div>
 
-
 <script><?= $this->view->jquery ?></script>
 <script><?= $this->view->popper ?></script>
 <script><?= $this->view->bootstrapJs ?></script>
 <script><?= $this->view->nowUiKitJs ?></script>
 <script>
+
+    $(document).ready(function () {
+        $.post("/cadastrar/buscarDados", {
+            id: sessionStorage.getItem("idData")
+        }, function (res, status) {
+            if (status === 'success') {
+                var response = JSON.parse(res);
+                $("#banca").val(response[0].banca);
+                $("#quant-quest").val(response[0].quant_questoes);
+                $("#quan-success").val(response[0].quant_acertos);
+            }
+        });
+    });
+
     $(document).submit(function (e) {
-        $.post("/cadastrar/salvar", {
+        $.post("/cadastrar/atualizar", {
+            id: sessionStorage.getItem("idData"),
             banca: $("#banca").val(),
             totalQuestoes: $("#quant-quest").val(),
             totalAcertos: $("#quan-success").val()

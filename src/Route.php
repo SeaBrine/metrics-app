@@ -82,6 +82,24 @@ class Route
             "action" => "listar"
         );
 
+        $routes[] = array(
+            "route" => "/atualizar",
+            "controller" => "exerciseController",
+            "action" => "formAtualizar"
+        );
+
+        $routes[] = array(
+            "route" => "/cadastrar/buscarDados",
+            "controller" => "exerciseController",
+            "action" => "buscarDados"
+        );
+
+        $routes[] = array(
+            "route" => "/cadastrar/atualizar",
+            "controller" => "exerciseController",
+            "action" => "atualizar"
+        );
+
         $this->setRoute($routes);
     }
 

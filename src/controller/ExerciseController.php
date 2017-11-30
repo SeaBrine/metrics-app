@@ -35,6 +35,7 @@ class ExerciseController extends Controller
     public function index() : void
     {
         if ($this->loginModel->verificarValidadeToken()) {
+            $this->view->bancas = $this->banca();
             $this->render('cadastrar');
         } else {
             $this->login->index();
@@ -62,12 +63,38 @@ class ExerciseController extends Controller
         }
     }
 
-    public function autalizar() : void
+    public function formAtualizar() : void
     {
         if ($this->loginModel->verificarValidadeToken()) {
-            $this->render('cadastrar');
+            $this->view->bancas = $this->banca();
+            $this->render('atualizar');
         } else {
             $this->login->index();
         }
+    }
+
+    public function atualizar() : void
+    {
+        if ($this->loginModel->verificarValidadeToken()) {
+            echo json_encode(array(
+                "response" => $this->exerciseModel->atualizar($_POST)
+            ));
+        } else {
+            $this->login->index();
+        }
+    }
+
+    public function buscarDados() : void
+    {
+        if ($this->loginModel->verificarValidadeToken()) {
+            echo json_encode($this->exerciseModel->listarPorId((int) $_POST['id']));
+        } else {
+            $this->login->index();
+        }
+    }
+
+    private function banca() : array
+    {
+        return $this->exerciseModel->banca();
     }
 }

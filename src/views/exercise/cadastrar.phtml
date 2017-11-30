@@ -75,8 +75,9 @@
                             <div class="form-group">
                                 <label>Banca</label>
                                 <select id="banca" class="form-control">
-                                    <option value="1">Teste</option>
-                                    <option value="1">Teste2</option>
+                                    <?php foreach ($this->view->bancas as $b) { ?>
+                                        <option value="<?= $b['nome'] ?>"><?= $b['nome'] ?></option>
+                                    <?php } ?>
                                 </select>
                             </div>
                             <div class="form-group">

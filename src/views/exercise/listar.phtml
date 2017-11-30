@@ -84,7 +84,7 @@
                         <td><?= $m['quant_acertos'] ?></td>
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic example">
-                                <button onclick="atualizar(<?= $k ?>)" type="button" class="btn btn-warning">
+                                <button onclick="atualizar(<?= $m['id'] ?>)" type="button" class="btn btn-warning">
                                     <span class="fa fa-pencil-square-o"></span>
                                 </button>
                                 <button onclick="excluir(<?= $m['id']?>)" type="button" class="btn btn-danger">
@@ -106,8 +106,9 @@
     <script><?= $this->view->bootstrapJs ?></script>
     <script><?= $this->view->nowUiKitJs ?></script>
     <script>
-        var atualizar = function (index) {
-            console.log(index);
+        var atualizar = function (id) {
+            sessionStorage.setItem("idData", id);
+            $(location).attr('href', '/atualizar');
         };
 
         var excluir = function (id) {

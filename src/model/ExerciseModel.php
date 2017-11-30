@@ -59,4 +59,54 @@ class ExerciseModel extends Model
 
         return $data->fetchAll(\PDO::FETCH_ASSOC);
     }
+
+    public function listarPorId(int $id) : array
+    {
+        $data = $this->getConection()
+            ->prepare("SELECT * FROM metrics.exercicios WHERE id = :id");
+
+        $data->execute(array(
+            "id" => $id
+        ));
+
+        return $data->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    public function atualizar(array $dados) : int
+    {
+        try {
+            $data = $this->getConection()
+                ->prepare("
+                UPDATE `metrics`.`exercicios`
+                SET                
+                `banca` = :banca,                
+                `quant_questoes` = :quant_questoes,
+                `quant_error` = :quant_error,
+                `quant_acertos` = :quant_acertos                
+                WHERE `id` = :id
+            ");
+
+            $data->execute(array(
+                "id" => $dados['id'],
+                "banca" => $dados['banca'],
+                "quant_questoes" => $dados['totalQuestoes'],
+                "quant_error" => ((int) $dados['totalQuestoes'] - (int) $dados['totalAcertos']),
+                "quant_acertos" => $dados['totalAcertos']
+            ));
+
+            return 200;
+        } catch (\Exception $e) {
+            return -200;
+        }
+    }
+
+    public function banca() : array
+    {
+        $data = $this->getConection()
+            ->prepare("SELECT * FROM metrics.bancas");
+
+        $data->execute();
+
+        return $data->fetchAll(\PDO::FETCH_ASSOC);
+    }
 }
