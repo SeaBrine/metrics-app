@@ -106,6 +106,12 @@ class Route
             "action" => "excluir"
         );
 
+        $routes[] = array(
+            "route" => "/pomodoro",
+            "controller" => "timerController",
+            "action" => "index"
+        );
+
         $this->setRoute($routes);
     }
 
