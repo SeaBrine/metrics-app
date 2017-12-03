@@ -3,6 +3,14 @@
 <head>
     <style> <?= $this->view->bootstrapCss ?> </style>
     <style> <?= $this->view->nowUiKitCss ?> </style>
+    <script src="https://use.fontawesome.com/c3cb34f65e.js"></script>
+    <style>
+        .pomodoro-number {
+            font-size: 100px;
+            color: white;
+            text-align: center;
+        }
+    </style>
 
 </head>
 <body>
@@ -45,13 +53,263 @@
         </div>
     </nav>
 
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card bg-success" style="width: 20rem;">
+                    <div class="card-body">
+                        <p class="pomodoro-number" id="timer-hora">00</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card bg-success" style="width: 20rem;">
+                    <div class="card-body">
+                        <p class="pomodoro-number" id="timer-minutes">25</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card bg-success" style="width: 20rem;">
+                    <div class="card-body">
+                        <p class="pomodoro-number" id="timer-seconds">00</p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card" style="width: 20rem;">
+                    <div class="card-header">
+                        Configurações
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-md-8" id="info-pomodoro">Pomodoro: 00:25:00</div>
+                                <div class="col-md-4">
+                                    <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-pomodoro">
+                                        <span class="fa fa-plus"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-md-8" id="info-intervalo">Intervalo: 00:05:00</div>
+                                <div class="col-md-4">
+                                    <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-intervalo">
+                                        <span class="fa fa-plus"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card" style="width: 20rem;">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-primary btn-lg btn-block" id="start-pomodoro" onclick="start()">Start</button>
+                            </div>
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-primary btn-lg btn-block" onclick="stop()">Stop</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--  Modal  Pomodoro -->
+    <div class="modal fade" id="modal-pomodoro" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Configuração</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Hora</label>
+                                <input type="number" class="form-control" id="hora-new-pomodoro">
+                            </div>
+                            <div class="col-md-4">
+                                <label>Minutos</label>
+                                <input type="number" class="form-control" id="minutes-new-pomodoro">
+                            </div>
+                            <div class="col-md-4">
+                                <label>Segundos</label>
+                                <input type="number" class="form-control" id="seconds-new-pomodoro">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn-simple" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-info btn-simple" onclick="savePomodoro()" data-dismiss="modal">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--  Modal Intervalo  -->
+    <div class="modal fade" id="modal-intervalo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Configuração</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Hora</label>
+                                <input type="number" class="form-control" id="hora-new-intervalo">
+                            </div>
+                            <div class="col-md-4">
+                                <label>Minutos</label>
+                                <input type="number" class="form-control" id="minutos-new-intervalo">
+                            </div>
+                            <div class="col-md-4">
+                                <label>Segundos</label>
+                                <input type="number" class="form-control" id="segundos-new-intervalo">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn-simple" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-info btn-simple" data-dismiss="modal" onclick="saveIntervalo()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <script><?= $this->view->jquery ?></script>
     <script><?= $this->view->popper ?></script>
     <script><?= $this->view->bootstrapJs ?></script>
     <script><?= $this->view->nowUiKitJs ?></script>
+    <script>
+        
+        var time = 0;
+        var startPomodoro = false;
+        
+        function savePomodoro() {
+            var hora = $('#hora-new-pomodoro').val() === "" ? '00' : $('#hora-new-pomodoro').val();
+            var minutos = $('#minutes-new-pomodoro').val() === "" ? '00' : $('#minutes-new-pomodoro').val();
+            var segundos = $('#seconds-new-pomodoro').val() === "" ? '00' : $('#seconds-new-pomodoro').val();
+
+            $('#timer-hora').text(pad(hora, 2));
+            $('#timer-minutes').text(pad(minutos, 2));
+            $('#timer-seconds').text(pad(segundos, 2));
+
+            $('#info-pomodoro').text("Pomodoro: "+ pad(hora, 2) +":"+ pad(minutos, 2) +":"+ pad(segundos, 2));
+        }
+
+        function saveIntervalo() {
+            var hora = $('#hora-new-intervalo').val() === "" ? '00' : $('#hora-new-intervalo').val();
+            var minutos = $('#minutos-new-intervalo').val() === "" ? '00' : $('#minutos-new-intervalo').val();
+            var segundos = $('#segundos-new-intervalo').val() === "" ? '00' : $('#segundos-new-intervalo').val();
+
+            $('#info-intervalo').text("Pomodoro: "+ pad(hora, 2) +":"+ pad(minutos, 2) +":"+ pad(segundos, 2));
+        }
+
+        function start() {
+
+            if ($("#start-pomodoro").text() === "Pause") {
+
+                $("#start-pomodoro").removeClass("btn-success");
+                $("#start-pomodoro").addClass("btn-primary");
+                $("#start-pomodoro").text("Start");
+
+                clearInterval(this.time);
+
+            } else {
+                $("#start-pomodoro").removeClass("btn-primary");
+                $("#start-pomodoro").addClass("btn-success");
+                $("#start-pomodoro").text("Pause");
+
+                if (!this.startPomodoro) {
+                    var time = $('#info-pomodoro').text().split(':');
+                    var hora = parseInt(time[1]);
+                    var minutos = parseInt(time[2]);
+                    var segundos = parseInt(time[3]);
+                    this.startPomodoro = true;
+                } else {
+                    $('#timer-hora').text();
+                    $('#timer-minutes').text();
+                    $('#timer-seconds').text();
+
+                    var hora = parseInt($('#timer-hora').text());
+                    var minutos = parseInt($('#timer-minutes').text());
+                    var segundos = parseInt($('#timer-seconds').text());
+                }
+
+                this.time = setInterval(function () {
+                    segundos -= 1;
+                    if (segundos < 0 && minutos > 0) {
+                        segundos = 59;
+                        minutos -= 1;
+                    } else if (segundos < 0 && minutos === 0 && hora > 0) {
+                        segundos = 59;
+                        minutos = 59;
+                        hora -= 1;
+                    } else if (segundos < 0 && minutos === 0 && hora === 0) {
+                        var interval = $('#info-intervalo').text().split(':');
+                        hora = parseInt(interval[1]);
+                        minutos = parseInt(interval[2]);
+                        segundos = parseInt(interval[3]);
+
+                        $.post('/timer/salvar', {
+                            hora: time[1],
+                            minutos: time[2];
+                            segundos: time[3]
+                        }, function (res, status) {
+                           console.log(res);
+                           console.log(status);
+                        });
+                    }
+
+
+                    $('#timer-hora').text(pad(hora, 2));
+                    $('#timer-minutes').text(pad(minutos, 2));
+                    $('#timer-seconds').text(pad(segundos, 2));
+
+                }, 1000);
+            }
+
+
+        }
+        
+        function stop() {
+
+            var pomodoro = $('#info-pomodoro').text().split(":");
+
+            $('#timer-hora').text(pomodoro[1]);
+            $('#timer-minutes').text(pomodoro[2]);
+            $('#timer-seconds').text(pomodoro[3]);
+
+            $("#start-pomodoro").removeClass("btn-success");
+            $("#start-pomodoro").addClass("btn-primary");
+            $("#start-pomodoro").text("Start");
+
+            this.startPomodoro = false;
+
+            clearInterval(this.time);
+        }
+
+        function pad(str, length) {
+            const resto = length - String(str).length;
+            return '0'.repeat(resto > 0 ? resto : '0') + str;
+        }
+    </script>
 
 </body>
 </html>
