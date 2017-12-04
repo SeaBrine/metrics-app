@@ -34,4 +34,19 @@ class TimerController extends Controller
             $this->login->index();
         }
     }
+
+    public function salvar() : void
+    {
+        if ($this->loginModel->verificarValidadeToken()) {
+            $hora = (int) $_POST['hora'];
+            $minutos = (int) $_POST['minutos'];
+            $segundos = (int) $_POST['segundos'];
+
+            echo json_encode(array(
+                "result" => $this->timerModel->salvar($hora, $minutos, $segundos)
+            ));
+        } else {
+            $this->login->index();
+        }
+    }
 }

@@ -112,6 +112,12 @@ class Route
             "action" => "index"
         );
 
+        $routes[] = array(
+            "route" => "/timer/salvar",
+            "controller" => "timerController",
+            "action" => "salvar"
+        );
+
         $this->setRoute($routes);
     }
 

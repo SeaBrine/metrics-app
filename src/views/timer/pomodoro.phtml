@@ -200,6 +200,8 @@
         
         var time = 0;
         var startPomodoro = false;
+        var pomodoro = true;
+        var intervalo = false;
         
         function savePomodoro() {
             var hora = $('#hora-new-pomodoro').val() === "" ? '00' : $('#hora-new-pomodoro').val();
@@ -218,7 +220,7 @@
             var minutos = $('#minutos-new-intervalo').val() === "" ? '00' : $('#minutos-new-intervalo').val();
             var segundos = $('#segundos-new-intervalo').val() === "" ? '00' : $('#segundos-new-intervalo').val();
 
-            $('#info-intervalo').text("Pomodoro: "+ pad(hora, 2) +":"+ pad(minutos, 2) +":"+ pad(segundos, 2));
+            $('#info-intervalo').text("Intervalo: "+ pad(hora, 2) +":"+ pad(minutos, 2) +":"+ pad(segundos, 2));
         }
 
         function start() {
@@ -262,19 +264,33 @@
                         minutos = 59;
                         hora -= 1;
                     } else if (segundos < 0 && minutos === 0 && hora === 0) {
-                        var interval = $('#info-intervalo').text().split(':');
-                        hora = parseInt(interval[1]);
-                        minutos = parseInt(interval[2]);
-                        segundos = parseInt(interval[3]);
 
-                        $.post('/timer/salvar', {
-                            hora: time[1],
-                            minutos: time[2];
-                            segundos: time[3]
-                        }, function (res, status) {
-                           console.log(res);
-                           console.log(status);
-                        });
+                        if (!this.intervalo) {
+                            var interval = $('#info-intervalo').text().split(':');
+                            hora = parseInt(interval[1]);
+                            minutos = parseInt(interval[2]);
+                            segundos = parseInt(interval[3]);
+
+                            $.post('/timer/salvar', {
+                                hora: time[1],
+                                minutos: time[2],
+                                segundos: time[3]
+                            }, function (res, status) {
+                                console.log(res);
+                                console.log(status);
+                            });
+
+                            this.intervalo = true;
+                            this.pomodoro = false;
+                        } else if (!this.pomodoro) {
+                            time = $('#info-pomodoro').text().split(':');
+                            hora = parseInt(time[1]);
+                            minutos = parseInt(time[2]);
+                            segundos = parseInt(time[3]);
+
+                            this.intervalo = false;
+                            this.pomodoro = true;
+                        }
                     }
 
 
