@@ -31,4 +31,16 @@ class TimerModel extends Model
             return -200;
         }
     }
+
+    public function obter(string $userId = ''): array
+    {
+        $result = $this->getConection()
+            ->prepare("SELECT * FROM metrics.tempo WHERE user_id = :id");
+
+        $result->execute(array(
+            "id" => $userId
+        ));
+
+        return $result->fetchAll(\PDO::FETCH_ASSOC);
+    }
 }

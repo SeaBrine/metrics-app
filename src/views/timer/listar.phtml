@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <style> <?= $this->view->bootstrapCss ?> </style>
+    <style> <?= $this->view->nowUiKitCss ?> </style>
+    <script src="https://use.fontawesome.com/c3cb34f65e.js"></script>
+
+    <style>
+        .ocultar-alerta {
+            display: none;
+        }
+
+        .cor-font-branca {
+            color: white;
+        }
+    </style>
+
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg bg-danger">
+    <div class="container">
+        <div class="navbar-translate">
+            <a class="navbar-brand" href="/home">
+                Metrics
+            </a>
+        </div>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navigation">
+            <div class="dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbarDropdownMenuLink1">
+                    Métricas
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink1">
+                    <a class="dropdown-item" href="/cadastrar">Cadastrar</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="/listar">Métricas Cadastradas</a>
+                </ul>
+            </div>
+            <div class="dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbarDropdownMenuLink1">
+                    Tempo
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink1">
+                    <a class="dropdown-item" href="/timer/listar">Tempo Cadastrados</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="/pomodoro">Pomodoro</a>
+                </ul>
+            </div>
+            <a href="/logout" class="nav-link">
+                logout
+            </a>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <?php if (count($this->view->times, COUNT_NORMAL) == 0) { ?>
+        <div class="alert alert-warning" role="alert">
+            <div class="container">
+                <div class="alert-icon">
+                    <i class="fa fa-bell-o"></i>
+                </div>
+                <strong>Não Existe!</strong> Tempos cadastrado para você
+            </div>
+        </div>
+    <?php } else { ?>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Data de Registro</th>
+                <th scope="col">Minutos</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($this->view->times as $k => $m) {?>
+                <tr>
+                    <td><?= $m['data_registro'] ?></td>
+                    <td><?= $m['tempo'] ?></td>
+                    <td>
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <button onclick="modalExcluir(<?= $m['id']?>)" type="button" class="btn btn-danger">
+                                <span class="fa fa-trash-o"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            <?php }?>
+            </tbody>
+        </table>
+    <?php } ?>
+
+</div>
+
+<!-- Modal Core -->
+<div class="modal fade" id="modal-aviso-tempo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content bg-danger">
+            <div class="modal-header">
+                <h3 class="modal-title cor-font-branca" id="myModalLabel">Atenção</h3>
+            </div>
+            <div class="modal-body cor-font-branca">
+                <h4>Você tem certeza que deseja excluir esse tempo ?</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="excluir()">Sim</button>
+                <button type="button" class="btn btn-info" data-dismiss="modal">Não</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Core -->
+<div class="modal fade" id="modal-sucesso-tempo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content bg-success">
+            <div class="modal-header">
+                <h3 class="modal-title cor-font-branca" id="myModalLabel">Sucesso</h3>
+            </div>
+            <div class="modal-body cor-font-branca">
+                <h4>Tempo Excluido com Sucesso</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="modalSucesso()">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script><?= $this->view->jquery ?></script>
+<script><?= $this->view->popper ?></script>
+<script><?= $this->view->bootstrapJs ?></script>
+<script><?= $this->view->nowUiKitJs ?></script>
+<script>
+    var modalExcluir = function (id) {
+        sessionStorage.setItem("idData", id);
+        $("#modal-aviso-tempo").modal();
+    };
+
+    var excluir = function () {
+        $.post("/timer/delete", {
+            id: sessionStorage.getItem("idData")
+        }, function (res, status) {
+            if (status === "success") {
+                $("#modal-sucesso-tempo").modal();
+            }
+        });
+    };
+
+    var modalSucesso = function () {
+        location.reload();
+    };
+</script>
+
+</body>
+</html>

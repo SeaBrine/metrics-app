@@ -49,4 +49,14 @@ class TimerController extends Controller
             $this->login->index();
         }
     }
+
+    public function listar(): void
+    {
+        if ($this->loginModel->verificarValidadeToken()) {
+            $this->view->times = $this->timerModel->obter($_SESSION['id_user']);
+            $this->render("listar");
+        } else {
+            $this->login->index();
+        }
+    }
 }
