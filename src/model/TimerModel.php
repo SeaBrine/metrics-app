@@ -43,4 +43,19 @@ class TimerModel extends Model
 
         return $result->fetchAll(\PDO::FETCH_ASSOC);
     }
+
+    public function delete(string $idTimer): int
+    {
+        try{
+            $this->getConection()
+                ->prepare("DELETE FROM metrics.tempo WHERE id = :id")
+                ->execute(array(
+                   "id" => $idTimer
+                ));
+
+            return 200;
+        } catch (\Exception $e) {
+            return -200;
+        }
+    }
 }

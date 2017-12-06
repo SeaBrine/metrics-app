@@ -59,4 +59,15 @@ class TimerController extends Controller
             $this->login->index();
         }
     }
+
+    public function deletar(): void
+    {
+        if ($this->loginModel->verificarValidadeToken()) {
+            echo json_encode(array(
+                "result" => $this->timerModel->delete($_POST['id'])
+            ));
+        } else {
+            $this->login->index();
+        }
+    }
 }

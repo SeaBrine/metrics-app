@@ -134,13 +134,13 @@
 <script><?= $this->view->nowUiKitJs ?></script>
 <script>
     var modalExcluir = function (id) {
-        sessionStorage.setItem("idData", id);
+        sessionStorage.setItem("idTime", id);
         $("#modal-aviso-tempo").modal();
     };
 
     var excluir = function () {
         $.post("/timer/delete", {
-            id: sessionStorage.getItem("idData")
+            id: sessionStorage.getItem("idTime")
         }, function (res, status) {
             if (status === "success") {
                 $("#modal-sucesso-tempo").modal();

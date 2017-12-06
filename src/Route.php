@@ -124,6 +124,12 @@ class Route
             "action" => "listar"
         );
 
+        $routes[] = array(
+            "route" => "/timer/delete",
+            "controller" => "timerController",
+            "action" => "deletar"
+        );
+
         $this->setRoute($routes);
     }
 
