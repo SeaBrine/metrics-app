@@ -60,6 +60,18 @@ class HomeModel extends Model
         return $data->fetchAll(\PDO::FETCH_ASSOC);
     }
 
+    public function timeMonth(): array
+    {
+        $data = $this->getConection()
+            ->prepare("SELECT id, DATE_FORMAT(data_registro, '%Y') as data, user_id, tempo FROM metrics.tempo WHERE user_id = :id");
+
+        $data->execute(array(
+           "id" =>  $_SESSION['id_user']
+        ));
+
+        return $data->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
     public function createSeries(array $data) : array
     {
         $meses = [
