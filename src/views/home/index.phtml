@@ -89,6 +89,7 @@
        $.post('/home/graphic', function (res, status) {
            var json = JSON.parse(res);
 
+
            var lineProva = document.getElementById("lineProva");
            var barProva = document.getElementById("barProva");
            var lineTempo = document.getElementById("lineTempo");
@@ -96,8 +97,8 @@
 
            graphicLine(lineProva, json.graf.valores);
            graphicBar(barProva, json.graf.valores);
-           graphicLine(lineTempo, []);
-           graphicBar(barTempo, []);
+           graphicLine(lineTempo, json.time.valores);
+           graphicBar(barTempo, json.time.valores);
 
        });
     });

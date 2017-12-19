@@ -39,7 +39,12 @@ class HomeController extends Controller
     public function graphic() : void
     {
         if ($this->loginModel->verificarValidadeToken()) {
-            echo json_encode(["graf" => $this->homeModel->createSeries($this->homeModel->mensal())]);
+            echo json_encode(
+                [
+                    "graf" => $this->homeModel->createSeries($this->homeModel->mensal()),
+                    "time" => $this->homeModel->createSeriesTime($this->homeModel->timeMonth())
+                ]
+            );
         } else {
             $this->login->index();
         }

@@ -63,7 +63,7 @@ class HomeModel extends Model
     public function timeMonth(): array
     {
         $data = $this->getConection()
-            ->prepare("SELECT id, DATE_FORMAT(data_registro, '%Y') as data, user_id, tempo FROM metrics.tempo WHERE user_id = :id");
+            ->prepare("SELECT id, DATE_FORMAT(data_registro, '%M-%Y-%m') as mes, user_id, tempo FROM metrics.tempo WHERE user_id = :id");
 
         $data->execute(array(
            "id" =>  $_SESSION['id_user']
@@ -103,6 +103,46 @@ class HomeModel extends Model
                 }
 
                 $valores[$mes[2] - 1] = (double) number_format($cal, 0);
+            }
+        }
+
+        return array(
+            "meses" => $meses,
+            "valores" => $valores
+        );
+    }
+
+    public function createSeriesTime(array $data) : array
+    {
+        $meses = [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December",
+        ];
+
+        $valores = [0,0,0,0,0,0,0,0,0,0,0,0];
+
+        foreach ($data as $d) {
+            $mes = explode("-", $d['mes']);
+
+            if (in_array($mes[0], $meses)) {
+                $cal = 0;
+                foreach ($data as $v) {
+                    if ($d['mes'] === $v['mes']) {
+                        $cal += (int) $d['tempo'] ;
+                    }
+                }
+
+                $valores[$mes[2] - 1] = $cal;
             }
         }
 
