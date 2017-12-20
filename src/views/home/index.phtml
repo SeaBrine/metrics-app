@@ -3,6 +3,12 @@
 <head>
     <style> <?= $this->view->bootstrapCss ?> </style>
     <style> <?= $this->view->nowUiKitCss ?> </style>
+    <style>
+        .infor-questoes {
+            text-align: center;
+            font-size: 40px;
+        }
+    </style>
 
 </head>
 <body>
@@ -49,7 +55,7 @@
             <div class="card text-white bg-info mb-3" style="max-width: 20rem;">
                 <div class="card-header">Questões <?= date('Y')?></div>
                 <div class="card-body">
-                    <p>30 Questões</p>
+                    <p id="quant-questoes" class="infor-questoes">0 Questões</p>
                 </div>
             </div>
         </div>
@@ -57,7 +63,7 @@
             <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
                 <div class="card-header">Tempo <?= date('Y')?></div>
                 <div class="card-body">
-                    <p>300 minutos</p>
+                    <p id="quant-minutos" class="infor-questoes">0 minutos</p>
                 </div>
             </div>
         </div>
@@ -65,7 +71,7 @@
             <div class="card text-white bg-success mb-3" style="max-width: 20rem;">
                 <div class="card-header">Aproveitamento <?= date("Y") ?></div>
                 <div class="card-body">
-                    <p>100%</p>
+                    <p id="quant-porcent" class="infor-questoes">0%</p>
                 </div>
             </div>
         </div>
@@ -99,6 +105,18 @@
            graphicBar(barProva, json.graf.valores);
            graphicLine(lineTempo, json.time.valores);
            graphicBar(barTempo, json.time.valores);
+
+           var totalQuest = json.graf.total_questions;
+
+           var totalMin = json.time.valores.reduce(function (vAnterior, vElem) {
+               return vAnterior + vElem;
+           }, 0);
+
+           var totalPorcent = (json.graf.total_success / json.graf.total_questions) * 100;
+
+           $("#quant-questoes").text(totalQuest + " Questões");
+           $("#quant-minutos").text(totalMin + " Minutos");
+           $("#quant-porcent").text(totalPorcent.toFixed(2) + "%");
 
        });
     });
