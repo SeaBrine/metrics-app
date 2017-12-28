@@ -76,6 +76,23 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card text-white bg-success mb-12" style="max-width: 100%;">
+                <div class="card-header">Filtro</div>
+                <div class="card-body">
+                    <label>Bancas</label>
+                    <select id="bancas" class="form-control">
+                        <?php foreach ($this->view->bancas as $b) {?>
+                            <option value="<?= $b['banca'] ?>"><?= $b['banca'] ?></option>
+                        <?php }?>
+                    </select>
+                    <br>
+                    <button class="btn btn-info" onclick="carregar()">Carregar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <canvas id="lineProva" width="200" height="60"></canvas>
@@ -120,6 +137,37 @@
 
        });
     });
+
+    var carregar = function() {
+        var banca = $("#bancas").val();
+        $.post('/home/graphicBanca',{banca: banca}, function (res, status) {
+            var json = JSON.parse(res);
+
+
+            var lineProva = document.getElementById("lineProva");
+            var barProva = document.getElementById("barProva");
+            var lineTempo = document.getElementById("lineTempo");
+            var barTempo = document.getElementById("barTempo");
+
+            graphicLine(lineProva, json.graf.valores);
+            graphicBar(barProva, json.graf.valores);
+            graphicLine(lineTempo, json.time.valores);
+            graphicBar(barTempo, json.time.valores);
+
+            var totalQuest = json.graf.total_questions;
+
+            var totalMin = json.time.valores.reduce(function (vAnterior, vElem) {
+                return vAnterior + vElem;
+            }, 0);
+
+            var totalPorcent = (json.graf.total_success / json.graf.total_questions) * 100;
+
+            $("#quant-questoes").text(totalQuest + " Questões");
+            $("#quant-minutos").text(totalMin + " Minutos");
+            $("#quant-porcent").text(totalPorcent.toFixed(2) + "%");
+
+        });
+    }
 </script>
 </body>
 </html>

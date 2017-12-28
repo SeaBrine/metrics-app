@@ -130,6 +130,12 @@ class Route
             "action" => "deletar"
         );
 
+        $routes[] = array(
+            "route" => "/home/graphicBanca",
+            "controller" => "homeController",
+            "action" => "graphicBanca"
+        );
+
         $this->setRoute($routes);
     }
 

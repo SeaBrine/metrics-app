@@ -36,6 +36,19 @@ class HomeModel extends Model
         return $data->fetchAll(\PDO::FETCH_ASSOC);
     }
 
+    public function porBanca(string $banca) : array
+    {
+        $data = $this->getConection()
+            ->prepare("SELECT DATE_FORMAT(data_registro, '%M-%Y-%m') as mes, SUM(quant_questoes) as total_questoes, SUM(quant_acertos) as total_acerto, SUM(quant_error) as total_error FROM metrics.exercicios WHERE user_id = :id AND banca = :banca GROUP BY DATE_FORMAT(data_registro, '%M-%Y-%m')");
+
+        $data->execute(array(
+            "id" => $_SESSION['id_user'],
+            "banca" => $banca
+        ));
+
+        return $data->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
     public function semanal() : array
     {
         $data = $this->getConection()
@@ -90,9 +103,13 @@ class HomeModel extends Model
         ];
 
         $valores = [0,0,0,0,0,0,0,0,0,0,0,0];
+        $totalQuest = 0;
+        $totalAcerto = 0;
 
         foreach ($data as $d) {
             $mes = explode("-", $d['mes']);
+            $totalQuest += (int) $d['total_questoes'];
+            $totalAcerto += (int) $d['total_acerto'];
 
             if (in_array($mes[0], $meses)) {
                 $cal = 0;
@@ -108,7 +125,9 @@ class HomeModel extends Model
 
         return array(
             "meses" => $meses,
-            "valores" => $valores
+            "valores" => $valores,
+            "total_questions" => $totalQuest,
+            "total_success" => $totalAcerto
         );
     }
 
@@ -150,5 +169,21 @@ class HomeModel extends Model
             "meses" => $meses,
             "valores" => $valores
         );
+    }
+
+    public function obterBancas(): array
+    {
+        $data = $this->getConection()
+            ->prepare("SELECT nome as banca FROM metrics.bancas");
+        $data->execute();
+        return $data->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    public function obterAnos(): array
+    {
+        $data = $this->getConection()
+            ->prepare("SELECT date_format(data_registro, '%Y') as ano FROM metrics.exercicios GROUP BY date_format(data_registro, '%Y')");
+        $data->execute();
+        return $data->fetchAll(\PDO::FETCH_ASSOC);
     }
 }

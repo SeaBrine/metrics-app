@@ -6,7 +6,7 @@
  * Time: 19:20
  */
 
-namespace Metrics\Views\vendor;
+namespace Metrics\Views\bibliotecas;
 
 
 class Load

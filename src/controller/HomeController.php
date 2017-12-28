@@ -30,6 +30,8 @@ class HomeController extends Controller
     public function index() : void
     {
         if ($this->loginModel->verificarValidadeToken()) {
+            $this->view->bancas = $this->homeModel->obterBancas();
+            $this->view->anos = $this->homeModel->obterAnos();
             $this->render("index");
         } else {
             $this->login->index();
@@ -42,6 +44,20 @@ class HomeController extends Controller
             echo json_encode(
                 [
                     "graf" => $this->homeModel->createSeries($this->homeModel->mensal()),
+                    "time" => $this->homeModel->createSeriesTime($this->homeModel->timeMonth())
+                ]
+            );
+        } else {
+            $this->login->index();
+        }
+    }
+
+    public function graphicBanca(): void
+    {
+        if ($this->loginModel->verificarValidadeToken()) {
+            echo json_encode(
+                [
+                    "graf" => $this->homeModel->createSeries($this->homeModel->porBanca($_POST['banca'])),
                     "time" => $this->homeModel->createSeriesTime($this->homeModel->timeMonth())
                 ]
             );

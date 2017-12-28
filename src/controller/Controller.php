@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Metrics\Controller;
 
 
-use Metrics\Views\vendor\Load;
+use Metrics\Views\bibliotecas\Load;
 
 class Controller
 {
