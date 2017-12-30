@@ -55,7 +55,7 @@ class Controller
     {
         $arq = new Load();
 
-        $ponteiro = fopen($arq->load()."/".$url, "r");
+        $ponteiro = fopen($arq->load()."".$url, "r");
         $linha = "";
 
         while (!feof($ponteiro)) {
