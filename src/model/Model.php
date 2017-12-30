@@ -16,7 +16,7 @@ class Model
 
     function __construct()
     {
-        $this->pdo = new \PDO("mysql:host=192.168.99.100:3330", "root", "root");
+        $this->pdo = new \PDO("mysql:host=banco:3330", "root", "root");
     }
 
     public function getConection() : ?\PDO
